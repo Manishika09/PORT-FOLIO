@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
@@ -10,14 +9,17 @@ export default function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 1800);
 
     return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
     const moveCursor = (e) => {
-      setCursorPosition({ x: e.clientX, y: e.clientY });
+      setCursorPosition({
+        x: e.clientX,
+        y: e.clientY,
+      });
     };
 
     window.addEventListener("mousemove", moveCursor);
@@ -30,27 +32,19 @@ export default function App() {
   const projects = [
     {
       title: "DevStreak",
-      desc: "Gamified coding streak tracker with badges and analytics.",
-      image:
-        "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop",
+      desc: "Gamified coding streak tracker with badges, analytics, and productivity features.",
     },
     {
       title: "BhookIt",
-      desc: "Food ordering startup application with Firebase backend.",
-      image:
-        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop",
+      desc: "Food ordering startup application with Firebase backend and authentication.",
     },
     {
       title: "AI/ML Research Interface",
-      desc: "Research workflow platform for ML-driven materials science.",
-      image:
-        "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=1200&auto=format&fit=crop",
+      desc: "Research workflow platform for machine learning driven materials science systems.",
     },
     {
       title: "Gesture Game Controller",
-      desc: "AI hand gesture gaming controller using computer vision.",
-      image:
-        "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1200&auto=format&fit=crop",
+      desc: "Computer vision based hand gesture gaming controller using AI interaction.",
     },
   ];
 
@@ -58,10 +52,10 @@ export default function App() {
     return (
       <div className="bg-black h-screen flex items-center justify-center text-white">
         <motion.h1
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.7 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1 }}
-          className="text-5xl font-black text-cyan-400"
+          className="text-6xl font-black text-cyan-400"
         >
           Manishika.
         </motion.h1>
@@ -83,6 +77,7 @@ export default function App() {
 
       {/* NAVBAR */}
       <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur-xl bg-black/30 border-b border-white/10">
+
         <div className="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
 
           <h1 className="text-2xl font-black text-cyan-400">
@@ -90,9 +85,19 @@ export default function App() {
           </h1>
 
           <div className="hidden md:flex gap-8 text-gray-300">
-            <a href="#about" className="hover:text-cyan-400 transition">About</a>
-            <a href="#projects" className="hover:text-cyan-400 transition">Projects</a>
-            <a href="#contact" className="hover:text-cyan-400 transition">Contact</a>
+
+            <a href="#about" className="hover:text-cyan-400 transition">
+              About
+            </a>
+
+            <a href="#projects" className="hover:text-cyan-400 transition">
+              Projects
+            </a>
+
+            <a href="#contact" className="hover:text-cyan-400 transition">
+              Contact
+            </a>
+
           </div>
 
           <button
@@ -101,19 +106,29 @@ export default function App() {
           >
             ☰
           </button>
+
         </div>
 
         {mobileMenu && (
           <div className="md:hidden bg-black border-t border-white/10 px-6 py-6 flex flex-col gap-5 text-gray-300">
+
             <a href="#about">About</a>
             <a href="#projects">Projects</a>
             <a href="#contact">Contact</a>
+
           </div>
         )}
+
       </nav>
 
-      {/* HERO */}
+      {/* HERO SECTION */}
       <section className="min-h-screen flex flex-col justify-center items-center px-6 text-center relative z-10">
+
+        <img
+          src="/profile.jpg"
+          alt="profile"
+          className="w-40 h-40 rounded-full object-cover border-4 border-cyan-400 shadow-2xl mb-8"
+        />
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -146,10 +161,32 @@ export default function App() {
           and interactive digital experiences.
         </motion.p>
 
+        <div className="flex flex-wrap justify-center gap-5">
+
+          <a
+            href="#projects"
+            className="bg-cyan-400 text-black px-8 py-4 rounded-2xl font-bold hover:scale-105 transition"
+          >
+            View Projects
+          </a>
+
+          <a
+            href="/resume.pdf"
+            download
+            className="border border-cyan-400 text-cyan-400 px-8 py-4 rounded-2xl hover:bg-cyan-400 hover:text-black transition"
+          >
+            Download Resume
+          </a>
+
+        </div>
+
       </section>
 
       {/* ABOUT */}
-      <section id="about" className="py-24 px-6 max-w-6xl mx-auto relative z-10">
+      <section
+        id="about"
+        className="py-24 px-6 max-w-6xl mx-auto relative z-10"
+      >
 
         <motion.h2
           whileInView={{ opacity: 1, y: 0 }}
@@ -161,16 +198,22 @@ export default function App() {
         </motion.h2>
 
         <div className="bg-white/5 border border-white/10 rounded-3xl p-10 backdrop-blur-xl">
+
           <p className="text-gray-300 leading-8 text-lg">
-            I am a second-year BTech CSE student specializing in AI & ML.
-            Passionate about building scalable products, intelligent systems,
-            and modern user experiences.
+            I am a second-year BTech Computer Science student specializing in
+            AI & ML. Passionate about building scalable products,
+            intelligent systems, and modern user experiences.
           </p>
+
         </div>
+
       </section>
 
       {/* PROJECTS */}
-      <section id="projects" className="py-24 px-6 relative z-10">
+      <section
+        id="projects"
+        className="py-24 px-6 relative z-10"
+      >
 
         <motion.h2
           whileInView={{ opacity: 1, y: 0 }}
@@ -187,84 +230,84 @@ export default function App() {
             <motion.div
               key={index}
               whileHover={{ scale: 1.03 }}
-              className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden"
+              className="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-xl"
             >
 
-              <img
-                src={project.image}
-                alt={project.title}
-                className="h-60 w-full object-cover"
-              />
+              <h3 className="text-3xl font-bold mb-4 text-cyan-400">
+                {project.title}
+              </h3>
 
-              <div className="p-8">
+              <p className="text-gray-400 leading-7">
+                {project.desc}
+              </p>
 
-                <h3 className="text-3xl font-bold mb-4">
-                  {project.title}
-                </h3>
-
-                <p className="text-gray-400 leading-7 mb-6">
-                  {project.desc}
-                </p>
-
-                <div className="flex gap-4 flex-wrap">
-                  <button className="bg-cyan-400 text-black px-5 py-3 rounded-2xl font-bold">
-                    GitHub
-                  </button>
-
-                  <button className="border border-cyan-400 text-cyan-400 px-5 py-3 rounded-2xl">
-                    Live Demo
-                  </button>
-                </div>
-
-              </div>
             </motion.div>
           ))}
 
         </div>
+
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="py-24 px-6 relative z-10">
+      <section
+        id="contact"
+        className="py-24 px-6 relative z-10 text-center"
+      >
 
         <motion.h2
           whileInView={{ opacity: 1, y: 0 }}
           initial={{ opacity: 0, y: 50 }}
           transition={{ duration: 0.6 }}
-          className="text-5xl font-bold mb-8 text-center"
+          className="text-5xl font-bold mb-8"
         >
           Contact Me
         </motion.h2>
 
-        <form className="max-w-3xl mx-auto bg-white/5 border border-white/10 rounded-3xl p-10 flex flex-col gap-6">
+        <p className="text-gray-400 text-lg mb-12">
+          Let's connect and build something amazing.
+        </p>
 
-          <input
-            type="text"
-            placeholder="Your Name"
-            className="bg-black/40 border border-white/10 rounded-2xl px-6 py-4 outline-none"
-          />
+        <div className="flex flex-wrap justify-center gap-6">
 
-          <input
-            type="email"
-            placeholder="Your Email"
-            className="bg-black/40 border border-white/10 rounded-2xl px-6 py-4 outline-none"
-          />
+          <a
+            href="mailto:gmanishika@gmail.com"
+            className="bg-cyan-400 text-black px-8 py-4 rounded-2xl font-bold hover:scale-105 transition"
+          >
+            Email Me
+          </a>
 
-          <textarea
-            placeholder="Your Message"
-            rows="5"
-            className="bg-black/40 border border-white/10 rounded-2xl px-6 py-4 outline-none"
-          />
+          <a
+            href="tel:+916386621999"
+            className="border border-cyan-400 text-cyan-400 px-8 py-4 rounded-2xl hover:bg-cyan-400 hover:text-black transition"
+          >
+            Call Me
+          </a>
 
-          <button className="bg-cyan-400 text-black py-4 rounded-2xl font-bold hover:scale-105 transition">
-            Send Message
-          </button>
+          <a
+            href="https://github.com/Manishika09"
+            target="_blank"
+            className="border border-white/20 px-8 py-4 rounded-2xl hover:border-cyan-400 transition"
+          >
+            GitHub
+          </a>
 
-        </form>
+          <a
+            href="https://www.linkedin.com/in/manishika-gupta-a715812a4"
+            target="_blank"
+            className="border border-white/20 px-8 py-4 rounded-2xl hover:border-cyan-400 transition"
+          >
+            LinkedIn
+          </a>
+
+        </div>
+
       </section>
 
       {/* FOOTER */}
       <footer className="border-t border-white/10 py-8 text-center text-gray-500 relative z-10">
-        © 2026 Manishika Gupta.
+
+        © 2026 Manishika Gupta. Built with React & Tailwind CSS.
+
       </footer>
 
     </div>
