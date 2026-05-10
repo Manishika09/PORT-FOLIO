@@ -1,162 +1,200 @@
+
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+
 export default function App() {
+  const [loading, setLoading] = useState(true);
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const [mobileMenu, setMobileMenu] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const moveCursor = (e) => {
+      setCursorPosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener("mousemove", moveCursor);
+
+    return () => {
+      window.removeEventListener("mousemove", moveCursor);
+    };
+  }, []);
+
   const projects = [
     {
       title: "DevStreak",
       desc: "Gamified coding streak tracker with badges and analytics.",
+      image:
+        "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop",
     },
     {
       title: "BhookIt",
       desc: "Food ordering startup application with Firebase backend.",
+      image:
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop",
     },
     {
       title: "AI/ML Research Interface",
       desc: "Research workflow platform for ML-driven materials science.",
+      image:
+        "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=1200&auto=format&fit=crop",
     },
     {
       title: "Gesture Game Controller",
       desc: "AI hand gesture gaming controller using computer vision.",
+      image:
+        "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1200&auto=format&fit=crop",
     },
   ];
 
+  if (loading) {
+    return (
+      <div className="bg-black h-screen flex items-center justify-center text-white">
+        <motion.h1
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1 }}
+          className="text-5xl font-black text-cyan-400"
+        >
+          Manishika.
+        </motion.h1>
+      </div>
+    );
+  }
+
   return (
-    <div className="bg-black text-white min-h-screen">
+    <div className="bg-black text-white min-h-screen overflow-x-hidden relative">
 
-      {/* HERO SECTION */}
-      <section className="min-h-screen flex flex-col justify-center items-center px-6 text-center">
-        <img
-  src="/profile.jpg"
-  alt="profile"
-  className="w-40 h-40 rounded-full object-cover border-4 border-cyan-400 shadow-lg mb-8"
-/>
+      {/* GLOW CURSOR */}
+      <div
+        className="fixed w-72 h-72 bg-cyan-400/20 rounded-full blur-3xl pointer-events-none z-0"
+        style={{
+          left: cursorPosition.x - 150,
+          top: cursorPosition.y - 150,
+        }}
+      />
 
-        <p className="text-cyan-400 uppercase tracking-[6px] mb-4">
+      {/* NAVBAR */}
+      <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur-xl bg-black/30 border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+
+          <h1 className="text-2xl font-black text-cyan-400">
+            Manishika.
+          </h1>
+
+          <div className="hidden md:flex gap-8 text-gray-300">
+            <a href="#about" className="hover:text-cyan-400 transition">About</a>
+            <a href="#projects" className="hover:text-cyan-400 transition">Projects</a>
+            <a href="#contact" className="hover:text-cyan-400 transition">Contact</a>
+          </div>
+
+          <button
+            onClick={() => setMobileMenu(!mobileMenu)}
+            className="md:hidden text-3xl"
+          >
+            ☰
+          </button>
+        </div>
+
+        {mobileMenu && (
+          <div className="md:hidden bg-black border-t border-white/10 px-6 py-6 flex flex-col gap-5 text-gray-300">
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+          </div>
+        )}
+      </nav>
+
+      {/* HERO */}
+      <section className="min-h-screen flex flex-col justify-center items-center px-6 text-center relative z-10">
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-cyan-400 uppercase tracking-[6px] mb-4"
+        >
           AI/ML Engineer • Full Stack Developer
-        </p>
+        </motion.p>
 
-        <h1 className="text-6xl md:text-8xl font-black mb-6">
+        <motion.h1
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-6xl md:text-8xl font-black mb-6"
+        >
           Manishika
           <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
             Gupta
           </span>
-        </h1>
+        </motion.h1>
 
-        <p className="text-gray-400 max-w-2xl text-lg leading-8 mb-10">
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="text-gray-400 max-w-2xl text-lg leading-8 mb-10"
+        >
           Building intelligent applications, startup products,
           and interactive digital experiences.
-        </p>
+        </motion.p>
 
-        <div className="flex gap-5 flex-wrap justify-center">
-          <button className="bg-cyan-400 text-black px-8 py-4 rounded-2xl font-bold hover:scale-105 transition">
-            View Projects
-          </button>
-
-          <a
-  href="/resume.pdf"
-  download
-  className="border border-cyan-400 text-cyan-400 px-8 py-4 rounded-2xl hover:bg-cyan-400 hover:text-black transition"
->
-  Download Resume
-</a>
-        </div>
       </section>
 
-      {/* ABOUT SECTION */}
-      <section className="py-24 px-6 max-w-6xl mx-auto">
+      {/* ABOUT */}
+      <section id="about" className="py-24 px-6 max-w-6xl mx-auto relative z-10">
 
-        <h2 className="text-5xl font-bold mb-12 text-center">
+        <motion.h2
+          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 50 }}
+          transition={{ duration: 0.6 }}
+          className="text-5xl font-bold mb-12 text-center"
+        >
           About Me
-        </h2>
+        </motion.h2>
 
-        <div className="bg-white/5 border border-white/10 rounded-3xl p-10">
-
+        <div className="bg-white/5 border border-white/10 rounded-3xl p-10 backdrop-blur-xl">
           <p className="text-gray-300 leading-8 text-lg">
             I am a second-year BTech CSE student specializing in AI & ML.
             Passionate about building scalable products, intelligent systems,
             and modern user experiences.
           </p>
-
         </div>
       </section>
 
-      {/* SKILLS SECTION */}
-      <section className="py-24 px-6 bg-white/5">
+      {/* PROJECTS */}
+      <section id="projects" className="py-24 px-6 relative z-10">
 
-        <h2 className="text-5xl font-bold mb-16 text-center">
-          Skills
-        </h2>
-
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-
-          <div className="bg-black/40 border border-white/10 rounded-3xl p-8">
-            <h3 className="text-cyan-400 text-2xl font-bold mb-6">
-              Languages
-            </h3>
-
-            <div className="space-y-3 text-gray-300">
-              <p>JavaScript</p>
-              <p>Python</p>
-              <p>Java</p>
-              <p>SQL</p>
-            </div>
-          </div>
-
-          <div className="bg-black/40 border border-white/10 rounded-3xl p-8">
-            <h3 className="text-cyan-400 text-2xl font-bold mb-6">
-              Frontend
-            </h3>
-
-            <div className="space-y-3 text-gray-300">
-              <p>React</p>
-              <p>Tailwind CSS</p>
-              <p>Firebase</p>
-            </div>
-          </div>
-
-          <div className="bg-black/40 border border-white/10 rounded-3xl p-8">
-            <h3 className="text-cyan-400 text-2xl font-bold mb-6">
-              Backend
-            </h3>
-
-            <div className="space-y-3 text-gray-300">
-              <p>Node.js</p>
-              <p>Express</p>
-              <p>REST APIs</p>
-            </div>
-          </div>
-
-          <div className="bg-black/40 border border-white/10 rounded-3xl p-8">
-            <h3 className="text-cyan-400 text-2xl font-bold mb-6">
-              AI/ML
-            </h3>
-
-            <div className="space-y-3 text-gray-300">
-              <p>OpenCV</p>
-              <p>NumPy</p>
-              <p>Pandas</p>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* PROJECTS SECTION */}
-      <section className="py-24 px-6">
-
-        <h2 className="text-5xl font-bold mb-16 text-center">
+        <motion.h2
+          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 50 }}
+          transition={{ duration: 0.6 }}
+          className="text-5xl font-bold mb-16 text-center"
+        >
           Projects
-        </h2>
+        </motion.h2>
 
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10">
 
           {projects.map((project, index) => (
-            <div
+            <motion.div
               key={index}
-              className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden hover:scale-105 transition duration-300"
+              whileHover={{ scale: 1.03 }}
+              className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden"
             >
 
-              <div className="h-56 bg-gradient-to-br from-cyan-500/20 to-purple-500/20 flex items-center justify-center text-3xl font-bold">
-                {project.title}
-              </div>
+              <img
+                src={project.image}
+                alt={project.title}
+                className="h-60 w-full object-cover"
+              />
 
               <div className="p-8">
 
@@ -168,98 +206,65 @@ export default function App() {
                   {project.desc}
                 </p>
 
-                <div className="flex gap-4">
-                  <button className="bg-white text-black px-5 py-3 rounded-2xl font-bold hover:scale-105 transition">
+                <div className="flex gap-4 flex-wrap">
+                  <button className="bg-cyan-400 text-black px-5 py-3 rounded-2xl font-bold">
                     GitHub
                   </button>
 
-                  <button className="border border-cyan-400 text-cyan-400 px-5 py-3 rounded-2xl hover:bg-cyan-400 hover:text-black transition">
+                  <button className="border border-cyan-400 text-cyan-400 px-5 py-3 rounded-2xl">
                     Live Demo
                   </button>
                 </div>
 
               </div>
-
-            </div>
+            </motion.div>
           ))}
 
         </div>
       </section>
 
-      {/* EXPERIENCE SECTION */}
-      <section className="py-24 px-6 bg-white/5">
+      {/* CONTACT */}
+      <section id="contact" className="py-24 px-6 relative z-10">
 
-        <h2 className="text-5xl font-bold mb-16 text-center">
-          Experience
-        </h2>
+        <motion.h2
+          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 50 }}
+          transition={{ duration: 0.6 }}
+          className="text-5xl font-bold mb-8 text-center"
+        >
+          Contact Me
+        </motion.h2>
 
-        <div className="max-w-5xl mx-auto space-y-8">
+        <form className="max-w-3xl mx-auto bg-white/5 border border-white/10 rounded-3xl p-10 flex flex-col gap-6">
 
-          <div className="bg-black/40 border border-white/10 rounded-3xl p-8">
+          <input
+            type="text"
+            placeholder="Your Name"
+            className="bg-black/40 border border-white/10 rounded-2xl px-6 py-4 outline-none"
+          />
 
-            <h3 className="text-2xl font-bold text-cyan-400 mb-4">
-              AI/ML Research Interface Development
-            </h3>
+          <input
+            type="email"
+            placeholder="Your Email"
+            className="bg-black/40 border border-white/10 rounded-2xl px-6 py-4 outline-none"
+          />
 
-            <p className="text-gray-400 leading-7">
-              Developed GUI-based systems for machine learning research
-              workflows focused on materials science applications under
-              IIT Kanpur guidance.
-            </p>
+          <textarea
+            placeholder="Your Message"
+            rows="5"
+            className="bg-black/40 border border-white/10 rounded-2xl px-6 py-4 outline-none"
+          />
 
-          </div>
-
-          <div className="bg-black/40 border border-white/10 rounded-3xl p-8">
-
-            <h3 className="text-2xl font-bold text-cyan-400 mb-4">
-              Product & Startup Development
-            </h3>
-
-            <p className="text-gray-400 leading-7">
-              Designed and developed startup-focused applications with
-              authentication systems, dashboards, analytics,
-              and interactive user experiences.
-            </p>
-
-          </div>
-
-        </div>
-      </section>
-
-      {/* CONTACT SECTION */}
-      <section className="py-24 px-6 text-center">
-
-        <h2 className="text-5xl font-bold mb-8">
-          Contact
-        </h2>
-
-        <p className="text-gray-400 text-lg mb-10">
-          Let's build something amazing together.
-        </p>
-
-        <div className="flex gap-5 justify-center flex-wrap">
-
-          <button className="bg-cyan-400 text-black px-8 py-4 rounded-2xl font-bold hover:scale-105 transition">
-            GitHub
+          <button className="bg-cyan-400 text-black py-4 rounded-2xl font-bold hover:scale-105 transition">
+            Send Message
           </button>
 
-          <button className="border border-white/20 px-8 py-4 rounded-2xl hover:border-cyan-400 transition">
-            LinkedIn
-          </button>
-
-          <button className="border border-white/20 px-8 py-4 rounded-2xl hover:border-cyan-400 transition">
-            Email
-          </button>
-
-        </div>
-
+        </form>
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-white/10 py-8 text-center text-gray-500">
-
-        © 2026 Manishika Gupta. Built with React & Tailwind CSS.
-
+      <footer className="border-t border-white/10 py-8 text-center text-gray-500 relative z-10">
+        © 2026 Manishika Gupta.
       </footer>
 
     </div>
